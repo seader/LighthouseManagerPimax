@@ -32,7 +32,7 @@ It is possible to just run LighthouseManagerService or use it as a Windows Servi
 Open a Command Prompt as Administrator and type `sc create LighthouseManager DisplayName="LighthouseManager" binPath="C:\PATHTOEXTRACTEDFILES\LighthouseManagerService.exe"` to create the Windows Service and then `sc start LighthouseManager` to start it. For auto start type `sc config LighthouseManager start=auto`.
 You can uninstall it with `sc delete LighthouseManager` (If you want stop it before uninstalling with `sc stop LighthouseManager`).
 
-##Building with VS2022
+## Building with VS2022
 Needed:
 - Depends on .net 8.0, publishing results in selfcontaining .exe files
 - wix Toolset v4 
