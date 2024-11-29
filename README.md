@@ -34,7 +34,7 @@ It is possible to just run LighthouseManagerService or use it as a Windows Servi
 - You can uninstall it with `sc delete LighthouseManager` (If you want stop it before uninstalling with `sc stop LighthouseManager`).
 
 [Installer](https://github.com/seader/LighthouseManagerPimax/releases/download/%23first_release/LighthouseManager-Service-setup-files.zip):
-- Extract the archive and just run the LighthouseManagement.msi
+- Extract the installer archive and just run the LighthouseManagement.msi
 
 ## Building with VS2022
 Needed:
