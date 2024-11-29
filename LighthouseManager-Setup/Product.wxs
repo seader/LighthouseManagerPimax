@@ -1,0 +1,43 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Package Name="LighthouseManagement" Language="1033" Version="0.9.2" Manufacturer="Seadersn" UpgradeCode="9597df4a-a41c-4dbb-a4f3-2b7fb8f896e0" InstallerVersion="200">
+		
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		
+
+		<Feature Id="ProductFeature" Title="LighthouseManagement" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Package>
+
+	<Fragment>
+			<StandardDirectory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="LighthouseManagement" />
+			</StandardDirectory>
+		</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="LighthouseManager.exe">
+				<File Id="LighthouseManager.exe" Name="LighthouseManager.exe" Source="C:\Users\seade\Source\Repos\LighthouseManagerPimax\LighthouseManager\bin\Release\net8.0-windows10.0.22621.0\publish\win-x64\LighthouseManager.exe" />
+			</Component>
+			<Component Id="LighthouseManager.Shared.dll">
+				<File Id="LighthouseManager.Shared.dll" Name="LighthouseManager.Shared.dll" Source="C:\Users\seade\Source\Repos\LighthouseManagerPimax\LighthouseManager.Shared\bin\Release\net8.0\LighthouseManager.Shared.dll" />
+			</Component>
+			<Component Id="appsettings.json">
+				<File Id="appsettings.json" Name="appsettings.json" Source="C:\Users\seade\Source\Repos\LighthouseManagerPimax\LighthouseManagerService\bin\Release\net8.0\publish\win-x64\appsettings.json" />
+			</Component>
+			<Component Id="cmd.reg">
+				<File Id="cmd.reg" Name="cmd.reg" Source="C:\Users\seade\Source\Repos\LighthouseManagerPimax\LighthouseManager-Setup\cmd.reg" />
+			</Component>
+			<Component Id="how_to_use.txt">
+				<File Id="how_to_use.txt" Name="how_to_use.txt" Source="C:\Users\seade\Source\Repos\LighthouseManagerPimax\LighthouseManager-Setup\how_to_use.txt" />
+			</Component>
+			<Component>
+			  <File Id="LighthouseManagerService.exe" Name="LighthouseManagerService.exe" Source="C:\Users\seade\Source\Repos\LighthouseManagerPimax\LighthouseManagerService\bin\Release\net8.0\publish\win-x64\LighthouseManagerService.exe" KeyPath="yes" />
+			    <ServiceInstall Id="ServiceInstaller" Type="ownProcess" Name="LighthouseManagerService" DisplayName="LighthouseManagement" Description="Monitoring pi_server and start / stop your Lighthouses depending on it" Start="auto" ErrorControl="normal" />
+			    <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="LighthouseManagerService" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

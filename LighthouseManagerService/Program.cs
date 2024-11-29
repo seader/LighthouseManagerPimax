@@ -21,7 +21,7 @@ namespace LighthouseManagerService
             var logfile = Path.Combine(Helper.GetBasePath(), "App_Data", "logs", "LighthouseManagerService.log");
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .Enrich.With(new ThreadIdEnricher())
+                .Enrich.WithThreadId()
                 .Enrich.FromLogContext()
                 .WriteTo.Console(LogEventLevel.Information, loggerTemplate, theme: AnsiConsoleTheme.Literate)
                 .WriteTo.File(logfile, LogEventLevel.Information, loggerTemplate,

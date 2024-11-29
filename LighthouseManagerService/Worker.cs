@@ -44,7 +44,7 @@ namespace LighthouseManagerService
                 return;
             }
 
-            _logger.LogInformation("Start listening for SteamVR events.");
+            _logger.LogInformation("Start listening for Pimax Server events.");
             while (!stoppingToken.IsCancellationRequested)
             {
                 WatchForSteamVrProcess();
@@ -56,31 +56,35 @@ namespace LighthouseManagerService
         {
             if (_started) return;
 
-            var process = Process.GetProcessesByName("vrserver").SingleOrDefault();
+            var process = Process.GetProcessesByName("pi_server").SingleOrDefault();
 
             if (process == null) return;
             _started = true;
 
             process.EnableRaisingEvents = true;
 
-            _logger.LogInformation("SteamVR detected");
+            _logger.LogInformation("Pimax Server detected");
             _logger.LogInformation(
                 $"Starting LighthouseManager and wake base stations: {_settings.Value.BaseStationAddresses}");
 
             var lighthouseManagerProcess = Process.Start(_lighthouseManagerPath,
-                $"-w -a {_settings.Value.BaseStationAddresses}");
+                $"-d");
+                lighthouseManagerProcess = Process.Start(_lighthouseManagerPath,
+                $" -w -a {_settings.Value.BaseStationAddresses}");
 
             process.Exited += delegate
             {
-                // If LighthouseManager is still trying to start base station (but SteamVR exited) it should just stop for next actions
+                // If LighthouseManager is still trying to start base station (but Pimax Server exited) it should just stop for next actions
                 if (lighthouseManagerProcess != null && !lighthouseManagerProcess.HasExited)
                     lighthouseManagerProcess.Kill();
 
-                _logger.LogInformation("SteamVR closed");
+                _logger.LogInformation("Pimax Server closed");
                 _logger.LogInformation(
                     $"Starting LighthouseManager and sleep base stations: {_settings.Value.BaseStationAddresses}");
                 lighthouseManagerProcess = Process.Start(_lighthouseManagerPath,
-                    $"-s -a {_settings.Value.BaseStationAddresses}");
+                $"-d");
+                lighthouseManagerProcess = Process.Start(_lighthouseManagerPath,
+                    $" -s -a {_settings.Value.BaseStationAddresses}");
 
                 _started = false;
             };

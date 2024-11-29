@@ -38,7 +38,7 @@ namespace LighthouseManager
                 await Task.Run(async () =>
                 {
                     await FluentArgsBuilder.New()
-                        .DefaultConfigsWithAppDescription("An app to manage SteamVR Lighthouse.")
+                        .DefaultConfigsWithAppDescription("An app to manage SteamVR Lighthouses.")
                         .RegisterHelpFlag("-h", "--help")
                         .Given.Flag("-d", "--discover").Then(() => { _bluetoothManager.StartWatcher(); })
                         .Given.Flag("-i", "--identify").Then(b => b

@@ -1,0 +1,52 @@
+LighthouseManager and its own service for automation: a very lightweight tool for powering on/off of your Lighthouses. Full package, which means it brings .net 8 already with it, it is included in the executables (therefore bigger filesizes). Nothing more needed, just this tool.
+
+
+How to handle / Usage:
+With Command Prompt or Powershell, navigate to the location where LighthouseManager.exe is located. You too can use the supplied "cmd.reg" file for adding a "Run CMD as Admin" option in shift + right mouse button click context menu. It will open a cmd prompt in the current folder then.
+
+Syntax:
+LighthouseManager <parameter(s)> <MAC address(es)>
+
+
+Functions / parameters:
+-d or --discover 						Discover new Base Stations to get their MAC-Addresses.
+-i or --identify -a AA:AA:AA:AA:AA 				Identify a base station by flashing the LED.
+-w or --wake -a AA:AA:AA:AA:AA:AA,BB:BB:BB:BB:BB:BB 		Wake one or more Base Stations (write one or more addresses)
+-s or --sleep -a AA:AA:AA:AA:AA:AA,BB:BB:BB:BB:BB:BB 		Sleep one or more Base Stations (write one or more addresses)
+
+
+Exit codes:
+Based on success or not LighthouseManager will exit with different codes:
+0 All commands executed successfully
+1 One or more commands failed after given retry attempt
+
+
+LighthouseManagerService:
+LighthouseManagerService is a litte very lightweight tool (Windows Worker Service) that monitors Pimax' pi_server.exe process (pi_server.exe) for starting or closing in a given interval (default 2500ms) and then starting the otherwise independent LighthouseManager with corresponding parameters. You can configure interval (minimum 1000 milliseconds) and base station MAC addresses in appsettings.json. Open appsettings.json with a text editor and set your Base Station Mac Addresses which you can discover via LighthouseManager --discover parameter. 
+It is possible to just run LighthouseManagerService via simply executing it or use it as a Windows Service (I recommended this).
+
+
+Installation as Windows Service:
+Open a Command Prompt as Administrator and type:
+
+sc create LighthouseManager DisplayName="LighthouseManager" binPath="<path_to_your_LHManager_location>\LighthouseManagerService.exe"
+
+to create the Windows Service and then either use services.msc for starting it or type:
+
+sc start LighthouseManager
+
+For auto start either use services.msc and select the start type (auto recommended) in LighthouseManager service options (double click on it) or type:
+
+sc config LighthouseManager start=auto
+
+You can uninstall the service with:
+
+sc delete LighthouseManager
+
+If you want to, stop it before uninstalling, either via services.msc and stop it there or with using command
+
+sc stop LighthouseManager
+
+
+
+No more manual control of your Lighthouses, it's all automated now. Or just use it manually with shortcuts on your desktop to LighthouseManager.exe with basestations MAC addresses added. HAVE FUN! 
